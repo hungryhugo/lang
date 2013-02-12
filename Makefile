@@ -39,33 +39,41 @@ PDFS = main.pdf
 # org preprocessor
 TANGLE = ./org-babel-tangle
 
-all: $(PROJNAME)#tangle $(PROJNAME)
-#	$(PROJNAME)
+all: $(PROJNAME)
 
+# creates all source code and documentation files
 tangle: 
 	$(TANGLE) $(ORGS)
 
+# creates a c file from the org file with the same name
 $(SDIR)/%.c: $(ORGDIR)/%.org
 	$(TANGLE) $^
 
+# compiles one c file
 $(ODIR)/%.o: $(SDIR)/%.c $(DEPS)
 	$(CC) -c $< -o $@ $(CFLAGS)
 
+# compiles the project
 $(PROJNAME): $(OBJ)
 	$(MAKE) tangle
 	$(CC) $(SDIR)/main.c -o $@ $^ $(CFLAGS)
 
+# compiles the given test
 %_test: $(SDIR)/%_test.c $(OBJ)
 	$(CC) $^ -o $(ODIR)/$@ $(CFLAGS)
 
+# runs a given test
 run_%_test: %_test
 	$(ODIR)/$^
 
+# run all tests
 tests: run_$(TESTS)
 
+# compile a tex file to pdf
 $(DDIR)/%.pdf: $(DDIR)/%.tex
 	$(TEX) $^
 
+# compile all tex files
 doc: $(DDIR)/$(PDFS)
 
 
