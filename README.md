@@ -19,9 +19,9 @@ Building
 
 Creating source code and documentation files from the `.org` files is
 done using
-    make tangle
+     make tangle
 and compiling the source is done via
-    make lang
+     make lang
 for the source code, or
-    make doc
+     make doc
 for the documentation.
