@@ -6,6 +6,7 @@
 DIR=`pwd`
 FILES=""
 
+# change as needed
 EMACSBIN=/Applications/Emacs.app/Contents/MacOS/Emacs 
 EMACSLOADPATH=/Applications/Emacs.app/Contents/Resources/lisp:/Applications/Emacs.app/Contents/Resources/site-lisp
 EMACSPATH=/Applications/Emacs.app/Contents/Resources/lisp
@@ -29,4 +30,3 @@ $EMACSBIN -Q --batch -l $EMACSPATH"/org/org-install.el"   \
                            (org-export-as-latex-batch)
                            (kill-buffer)) '($FILES)))"
 
-# 2>&1 |grep tangled
