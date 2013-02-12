@@ -1,0 +1,22 @@
+#+LaTeX_HEADER: \usepackage{listings}
+#+LaTeX_HEADER: \usepackage{color}
+#+BIND: org-export-publishing-directory "./doc/"
+#+BIND: org-export-directory "./doc/"
+
+
+#+include other.org
+
+
+#+BEGIN_SRC c :tangle src/main.h
+  #define TEMP 0
+#+END_SRC
+
+#+BEGIN_SRC c :tangle src/main.c
+  #include "stdlib.h"
+  #include "main.h"
+  
+  int main()
+  {
+    return 0;
+  }  
+#+END_SRC
