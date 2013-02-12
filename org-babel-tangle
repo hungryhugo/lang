@@ -1,0 +1,32 @@
+#!/bin/bash
+# -*- mode: shell-script -*-
+#
+# tangle files with org-mode
+#
+DIR=`pwd`
+FILES=""
+
+EMACSBIN=/Applications/Emacs.app/Contents/MacOS/Emacs 
+EMACSLOADPATH=/Applications/Emacs.app/Contents/Resources/lisp:/Applications/Emacs.app/Contents/Resources/site-lisp
+EMACSPATH=/Applications/Emacs.app/Contents/Resources/lisp
+
+
+# wrap each argument in the code required to call tangle on it
+for i in $@; do
+    FILES="$FILES \"$i\""
+done
+
+$EMACSBIN -Q --batch -l $EMACSPATH"/org/org-install.el"   \
+        --eval "(progn (setq debug-on-error t)
+                   (add-to-list 'load-path (expand-file-name \"$EMACSPATH\"))
+                   (add-to-list 'load-path (expand-file-name \"$EMACSPATH/org\"))
+                   (add-to-list 'load-path (expand-file-name \"$EMACSPATH/vc\"))
+                   (require 'org) (require 'org-exp) (require 'ob) (require 'ob-tangle)
+                   (setq org-export-allow-BIND t)
+                   (mapc (lambda (file)
+                           (find-file (expand-file-name file \"$DIR\"))
+                           (org-babel-tangle)
+                           (org-export-as-latex-batch)
+                           (kill-buffer)) '($FILES)))"
+
+# 2>&1 |grep tangled
