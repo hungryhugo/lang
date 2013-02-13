@@ -17,15 +17,15 @@ TEX = pdflatex
 
 
 # org-mode files to be considered
-_ORGS = main.org
+_ORGS = main.org error.org
 ORGS = $(patsubst %,$(ORGDIR)/%,$(_ORGS))
 
 # header files created in org files
-_DEPS = main.h #error.h logging.h test.h
+_DEPS = main.h error.h #logging.h test.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
 # source files created in org files
-_SRC = main.c #error.c logging.c
+_SRC = main.c error.c #logging.c
 SRC = $(patsubst %, $(SDIR)/%, $(_SRC))
 
 _OBJ = $(patsubst %.c, %.o, $(_SRC))
