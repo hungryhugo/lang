@@ -12,6 +12,7 @@ DDIR = doc
 CFLAGS = -g -Wall -I$(IDIR)
 CC = gcc
 
+TFLAGS = -output-directory=$(DDIR)
 TEX = pdflatex
 
 
@@ -20,20 +21,24 @@ _ORGS = main.org
 ORGS = $(patsubst %,$(ORGDIR)/%,$(_ORGS))
 
 # header files created in org files
-_DEPS = #error.h logging.h test.h
+_DEPS = main.h #error.h logging.h test.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
 # source files created in org files
 _SRC = main.c #error.c logging.c
-SRC = $(patsubst %, $(ODIR)/%, $(_SRC))
+SRC = $(patsubst %, $(SDIR)/%, $(_SRC))
 
-OBJ = $(patsubst %.c, %.o, $(SRC))
+_OBJ = $(patsubst %.c, %.o, $(_SRC))
+OBJ = $(patsubst %, $(ODIR)/%, $(_OBJ))
 
 # tests created in org files
 TESTS = #logging_test
 
 # pdfs created from org files, one pdf for one org
-PDFS = main.pdf
+_DOCS = $(patsubst %.org, %.tex, $(_ORGS))
+DOCS = $(patsubst %,$(DDIR)/%,$(_DOCS))
+_PDFS = $(patsubst %.org, %.pdf, $(_ORGS))
+PDFS = $(patsubst %,$(DDIR)/%,$(_PDFS))
 
 # org preprocessors
 TANGLE = ./org-babel-tangle
@@ -46,11 +51,13 @@ all: $(PROJNAME)
 # creates all source code files
 tangle: $(ORGS)
 	mkdir -p $(ODIR) $(IDIR) $(SDIR)
-	$(TANGLE) $^
+	$(TANGLE) $(ORGS)
 
-# creates a c file from the org file with the same name
-$(SDIR)/%.c: $(ORGDIR)/%.org
-	$(TANGLE) $^
+
+# creation of the source code files
+$(DEPS): tangle
+
+$(SRC): tangle
 
 # compiles one c file
 $(ODIR)/%.o: $(SDIR)/%.c $(DEPS)
@@ -58,7 +65,6 @@ $(ODIR)/%.o: $(SDIR)/%.c $(DEPS)
 
 # compiles the project
 $(PROJNAME): $(OBJ)
-	$(MAKE) tangle
 	$(CC) -o $@ $^ $(CFLAGS)
 
 # compiles the given test
@@ -77,12 +83,14 @@ weave: $(ORGS)
 	mkdir -p $(DDIR)
 	$(WEAVE) $^
 
+$(DOCS): weave
+
 # compile a tex file to pdf
 $(DDIR)/%.pdf: $(DDIR)/%.tex
-	$(TEX) $^
+	$(TEX) $(TFLAGS) $^
 
 # compile all tex files
-doc: $(DDIR)/$(PDFS)
+doc: $(PDFS)
 
 
 .PHONY: clean
