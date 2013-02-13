@@ -24,7 +24,7 @@ done using
 
 and
 
-```make weave```.
+```make weave```
 
 Compiling the source is done simply with
 
@@ -32,4 +32,4 @@ Compiling the source is done simply with
 
 and compiling the documentation into `.pdf` files is done using
 
-```make pdfs```.
+```make pdfs```
