@@ -1,0 +1,32 @@
+#+LaTeX_HEADER: \usepackage{listings}
+#+LaTeX_HEADER: \usepackage{color}
+#+BIND: org-export-publishing-directory "../doc/"
+#+BIND: org-export-directory "../doc/"
+
+* Error Handling
+
+This provides very simple error handling. Via the macro
+\texttt{ERROR}, the function name and the line number are added to the
+output additionally to the provided error message.
+
+#+begin_src c :tangle ../include/error.h
+  /* 
+   * very simple error handling 
+   */
+  #define ERROR(msg) error(msg, __func__, __LINE__);
+  
+  void error(const char* message, const char* function, int line);
+#+end_src
+
+
+#+begin_src c :tangle ../src/error.c
+  #include "stdio.h"
+  #include "stdlib.h"
+
+  void error(const char* message, const char* function, int line)
+  {
+    printf("%s:%d: %s\n", function, line, message);
+    exit(-1);
+  }
+#+end_src
+
