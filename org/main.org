@@ -4,7 +4,7 @@
 #+BIND: org-export-directory "../doc/"
 
 
-#+include other.org
+//#+include other.org
 
 
 #+BEGIN_SRC c :tangle ../include/main.h
@@ -15,9 +15,14 @@
   #include "stdlib.h"
   #include "main.h"
   
+  #include "error.h"
+  
   int main()
   {
     printf("hello, world\n");
+  
+    ERROR("error test");
+    
     return 0;
-  }  
+  }
 #+END_SRC
