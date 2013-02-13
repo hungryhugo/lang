@@ -24,7 +24,7 @@ _DEPS = #error.h logging.h test.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
 # source files created in org files
-_SRC = #error.c logging.c
+_SRC = main.c #error.c logging.c
 SRC = $(patsubst %, $(ODIR)/%, $(_SRC))
 
 OBJ = $(patsubst %.c, %.o, $(SRC))
@@ -59,7 +59,7 @@ $(ODIR)/%.o: $(SDIR)/%.c $(DEPS)
 # compiles the project
 $(PROJNAME): $(OBJ)
 	$(MAKE) tangle
-	$(CC) $(SDIR)/main.c -o $@ $^ $(CFLAGS)
+	$(CC) -o $@ $^ $(CFLAGS)
 
 # compiles the given test
 %_test: $(SDIR)/%_test.c $(OBJ)
