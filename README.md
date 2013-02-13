@@ -18,18 +18,6 @@ Building
 --------
 
 Creating source code and documentation files from the `.org` files is
-done using
-
-```make tangle```
-
-and
-
-```make weave```
-
-Compiling the source is done simply with
-
-```make```
-
-and compiling the documentation into `.pdf` files is done using
-
-```make pdfs```
+done using `make tangle` and `make weave`. Compiling the source is
+done simply with `make` and compiling the documentation into `.pdf`
+files is done using `make pdfs`.
