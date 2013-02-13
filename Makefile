@@ -90,7 +90,7 @@ $(DDIR)/%.pdf: $(DDIR)/%.tex
 	$(TEX) $(TFLAGS) $^
 
 # compile all tex files
-doc: $(PDFS)
+pdfs: $(PDFS)
 
 
 .PHONY: clean
