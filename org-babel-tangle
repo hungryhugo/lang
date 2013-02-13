@@ -19,6 +19,7 @@ done
 
 $EMACSBIN -Q --batch -l $EMACSPATH"/org/org-install.el"   \
         --eval "(progn
+                   (setq make-backup-files nil)
                    (add-to-list 'load-path (expand-file-name \"$EMACSPATH\"))
                    (add-to-list 'load-path (expand-file-name \"$EMACSPATH/org\"))
                    (add-to-list 'load-path (expand-file-name \"$EMACSPATH/vc\"))
