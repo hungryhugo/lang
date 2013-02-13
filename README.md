@@ -24,7 +24,7 @@ done using
 
 and
 
-```make weave````.
+```make weave```.
 
 Compiling the source is done simply with
 
