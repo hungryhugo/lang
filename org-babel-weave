@@ -22,9 +22,10 @@ $EMACSBIN -Q --batch -l $EMACSPATH"/org/org-install.el"   \
                    (add-to-list 'load-path (expand-file-name \"$EMACSPATH\"))
                    (add-to-list 'load-path (expand-file-name \"$EMACSPATH/org\"))
                    (add-to-list 'load-path (expand-file-name \"$EMACSPATH/vc\"))
-                   (require 'org) (require 'org-exp) (require 'ob) (require 'ob-tangle)
+                   (require 'org) (require 'org-exp)
+                   (setq org-export-allow-BIND t)
                    (mapc (lambda (file)
                            (find-file (expand-file-name file \"$DIR\"))
-                           (org-babel-tangle)
+                           (org-export-as-latex-batch)
                            (kill-buffer)) '($FILES)))"
 
