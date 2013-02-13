@@ -22,12 +22,14 @@ done using
 
 ```make tangle```
 
-and compiling the source is done via
+and
 
-```make lang```
+```make weave````.
 
-for the source code, or
+Compiling the source is done simply with
 
-```make doc```
+```make```
 
-for the documentation.
+and compiling the documentation into `.pdf` files is done using
+
+```make pdfs```.
