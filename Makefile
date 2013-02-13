@@ -6,15 +6,14 @@ PROJNAME = lang
 ORGDIR = org
 IDIR = include
 SDIR = src
-CFLAGS = -g -Wall -I$(IDIR)
-CC = gcc
-TEX = pdflatex
-
 ODIR = obj
-LDIR = lib
 DDIR = doc
 
-LIBS = 
+CFLAGS = -g -Wall -I$(IDIR)
+CC = gcc
+
+TEX = pdflatex
+
 
 # org-mode files to be considered
 _ORGS = main.org
@@ -36,14 +35,18 @@ TESTS = #logging_test
 # pdfs created from org files, one pdf for one org
 PDFS = main.pdf
 
-# org preprocessor
+# org preprocessors
 TANGLE = ./org-babel-tangle
+WEAVE = ./org-babel-weave
 
+
+# exporting source code and compiling
 all: $(PROJNAME)
 
-# creates all source code and documentation files
-tangle: 
-	$(TANGLE) $(ORGS)
+# creates all source code files
+tangle: $(ORGS)
+	mkdir -p $(ODIR) $(IDIR) $(SDIR)
+	$(TANGLE) $^
 
 # creates a c file from the org file with the same name
 $(SDIR)/%.c: $(ORGDIR)/%.org
@@ -69,6 +72,11 @@ run_%_test: %_test
 # run all tests
 tests: run_$(TESTS)
 
+# create all documentation files
+weave: $(ORGS)
+	mkdir -p $(DDIR)
+	$(WEAVE) $^
+
 # compile a tex file to pdf
 $(DDIR)/%.pdf: $(DDIR)/%.tex
 	$(TEX) $^
@@ -80,4 +88,4 @@ doc: $(DDIR)/$(PDFS)
 .PHONY: clean
 
 clean:
-	rm -rf $(IDIR)/* $(SDIR)/* $(DDIR)/* $(ODIR)/* $(PROJNAME) $(PROJNAME).dSYM *~ \#*
+	rm -rf $(IDIR) $(SDIR) $(DDIR) $(ODIR) $(PROJNAME) $(PROJNAME).dSYM *~ \#*
